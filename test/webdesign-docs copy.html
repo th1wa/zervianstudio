@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Client Document Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:#080808; --card:#111; --card2:#161616; --border:#242424; --border2:#1e1e1e;
+  --gold:#c9a84c; --gold2:#e8c97a; --gold3:rgba(201,168,76,0.08);
+  --white:#f0ece3; --muted:#777; --muted2:#555;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:var(--sans);font-size:13px;line-height:1.65;min-height:100vh;}
+
+/* ── TOOLBAR ── */
+.toolbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(8,8,8,0.97);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+  display:flex;align-items:center;gap:0;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.tb-brand{
+  font-family:var(--serif);font-size:16px;color:var(--gold);
+  padding:14px 24px 14px 0;border-right:1px solid var(--border);
+  margin-right:16px;white-space:nowrap;
+}
+.tb-tabs{display:flex;gap:0;flex:1;}
+.tb-tab{
+  background:transparent;border:none;border-right:1px solid var(--border);
+  color:var(--muted);padding:16px 24px;cursor:pointer;
+  font-family:var(--sans);font-size:10px;font-weight:600;
+  letter-spacing:2.5px;text-transform:uppercase;
+  transition:all 0.2s;position:relative;white-space:nowrap;
+}
+.tb-tab:hover{color:var(--gold);background:var(--gold3);}
+.tb-tab.active{color:var(--gold);background:var(--gold3);}
+.tb-tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);}
+.tb-actions{display:flex;gap:8px;padding-left:16px;border-left:1px solid var(--border);}
+.tb-btn{
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:8px 18px;cursor:pointer;
+  font-family:var(--sans);font-size:9px;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;transition:all 0.2s;
+  white-space:nowrap;
+}
+.tb-btn:hover{border-color:var(--gold);color:var(--gold);}
+.tb-btn.gold{border-color:var(--gold);color:var(--gold);}
+.tb-btn.gold:hover{background:var(--gold3);}
+
+/* ── EDITABLE FIELDS ── */
+[contenteditable]{
+  outline:none;
+  border-bottom:1px dashed rgba(201,168,76,0.35);
+  min-width:80px;display:inline-block;
+  transition:border-color 0.2s,background 0.2s;
+  cursor:text;
+  position:relative;
+}
+[contenteditable]:hover{border-bottom-color:rgba(201,168,76,0.7);}
+[contenteditable]:focus{
+  background:rgba(201,168,76,0.07);
+  border-bottom:1px solid var(--gold);
+  border-radius:2px 2px 0 0;
+  padding:0 4px;
+}
+[contenteditable].placeholder-text{color:#444;font-style:italic;}
+[contenteditable].placeholder-text:focus{color:var(--muted);}
+
+.edit-hint{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);
+  padding:10px 16px;margin-bottom:32px;font-size:11px;color:var(--muted);
+}
+.edit-hint span{color:var(--gold);}
+
+/* ── SECTIONS ── */
+.section{display:none;padding:40px 0 80px;}
+.section.active{display:block;}
+.container{max-width:860px;margin:0 auto;padding:0 24px;}
+
+/* progress */
+.progress-bar{display:flex;gap:4px;margin-bottom:10px;}
+.pb-step{flex:1;height:2px;background:var(--border);}
+.pb-step.done{background:var(--gold);}
+.pb-labels{display:flex;gap:4px;margin-bottom:36px;}
+.pb-label{flex:1;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);text-align:center;}
+.pb-label.active{color:var(--gold);}
+
+/* sec-head */
+.sec-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--border);}
+.sec-num{font-family:var(--serif);font-size:64px;color:var(--border);font-weight:700;line-height:1;flex-shrink:0;}
+.sec-meta h2{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.sec-meta p{color:var(--muted);font-size:12px;}
+
+/* doc card */
+.doc-card{background:var(--card);border:1px solid var(--border);position:relative;margin-bottom:24px;}
+.doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent);}
+.doc-header{padding:36px 48px 28px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;}
+.dhl .co{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.dhl h3{font-family:var(--serif);font-size:48px;font-weight:700;color:var(--white);letter-spacing:-1px;line-height:1;}
+.dhl .sub{color:var(--muted);font-size:11px;margin-top:6px;}
+.dhr{text-align:right;flex-shrink:0;}
+.dhr .rl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:3px;margin-top:10px;}
+.dhr .rv{font-size:11px;color:var(--muted);}
+.dhr .rv:first-of-type{margin-top:0;}
+.doc-body{padding:32px 48px 40px;}
+.doc-footer{padding:16px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.doc-footer .brand{font-family:var(--serif);font-size:12px;color:var(--muted2);}
+.doc-footer .brand span{color:var(--gold);}
+.doc-footer .conf{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);}
+
+/* snapshot */
+.snapshot{background:var(--card2);border:1px solid var(--border);border-left:2px solid var(--gold);padding:20px 24px;margin-bottom:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.snap-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:4px;}
+.snap-val{font-size:12px;color:var(--white);}
+.snap-val.gold{color:var(--gold);}
+
+/* two-col */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:28px;}
+.info-block h4{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.field-row{display:flex;align-items:baseline;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--border2);margin-bottom:7px;}
+.fl{font-size:9px;color:var(--muted2);white-space:nowrap;min-width:80px;letter-spacing:0.5px;}
+
+/* divider / title */
+.dd{border:none;border-top:1px solid var(--border);margin:24px 0;}
+.dt{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+
+/* clause */
+.clause{margin-bottom:22px;}
+.clause h4{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}
+.clause p{font-size:12px;color:#888;line-height:1.8;margin-bottom:5px;}
+.clause ul{list-style:none;margin-top:5px;}
+.clause ul li{font-size:12px;color:#888;padding:4px 0 4px 16px;position:relative;border-bottom:1px solid var(--border2);line-height:1.6;}
+.clause ul li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:10px;}
+.scope-box{background:var(--card2);border:1px solid var(--border);border-left:2px solid var(--gold);padding:14px 18px;margin-top:10px;font-size:12px;color:#888;line-height:1.8;}
+.scope-box strong{color:var(--white);}
+
+/* sig */
+.sig-block{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);}
+.sig-item h4{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+.sig-line{border-bottom:1px solid #333;height:40px;margin-bottom:6px;}
+.sig-lbl{font-size:9px;color:var(--muted2);}
+
+/* table */
+.svc-table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+.svc-table th{text-align:left;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);padding-bottom:8px;border-bottom:1px solid var(--border);}
+.svc-table th:not(:first-child){text-align:right;}
+.svc-table td{padding:10px 0;border-bottom:1px solid var(--border2);font-size:12px;vertical-align:top;}
+.svc-table td:not(:first-child){text-align:right;color:var(--muted);}
+.iname{font-weight:500;color:var(--white);margin-bottom:2px;}
+.idesc{font-size:11px;color:var(--muted2);}
+.opt-tag{display:inline-block;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,0.3);padding:1px 5px;margin-left:5px;vertical-align:middle;}
+
+/* totals */
+.totals-wrap{display:flex;justify-content:flex-end;margin-bottom:24px;}
+.totals-block{width:260px;}
+.total-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border2);font-size:12px;}
+.total-row .lbl{color:var(--muted);}
+.total-row.dep{color:var(--gold);}
+.total-row.grand{border-bottom:none;border-top:1px solid var(--border);padding-top:10px;font-size:14px;font-weight:600;color:var(--gold2);}
+
+/* payment */
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);margin-top:20px;}
+.pay-block{padding:20px 24px;}
+.pay-block:first-child{border-right:1px solid var(--border);}
+.pay-block h4{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.pay-block p{font-size:12px;color:var(--muted);line-height:1.9;}
+.notice{background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.15);padding:12px 18px;margin-top:16px;font-size:11px;color:#777;line-height:1.7;}
+.notice strong{color:var(--gold);}
+
+/* welcome */
+.welcome-letter{background:var(--card2);border-left:2px solid var(--gold);padding:24px 28px;margin-bottom:28px;font-size:13px;color:#999;line-height:1.9;}
+.welcome-letter strong{color:var(--white);}
+.welcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:28px;}
+.wg{background:var(--card);padding:20px 24px;}
+.wg h4{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.wg p{font-size:12px;color:var(--muted);line-height:1.7;}
+.link-ph{display:inline-block;background:rgba(201,168,76,0.08);border:1px dashed rgba(201,168,76,0.25);color:var(--gold);font-size:10px;padding:4px 10px;margin-bottom:8px;font-style:italic;}
+
+.bullets{display:grid;gap:0;}
+.bullet{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--border2);line-height:1.5;}
+.bullet:last-child{border-bottom:none;}
+.bullet-dot{color:var(--gold);font-size:10px;flex-shrink:0;padding-top:2px;}
+.bullet strong{color:#bbb;}
+
+.timeline{display:grid;gap:0;margin:8px 0;}
+.tl-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border2);align-items:flex-start;}
+.tl-item:last-child{border-bottom:none;}
+.tl-num{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold);flex-shrink:0;width:22px;line-height:1.2;}
+.tl-title{font-size:12px;font-weight:600;color:var(--white);margin-bottom:1px;}
+.tl-desc{font-size:11px;color:var(--muted);}
+
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:8px;}
+.check-item{background:var(--card);padding:10px 14px;display:flex;gap:10px;align-items:center;font-size:12px;color:var(--muted);}
+.check-box{width:13px;height:13px;border:1px solid var(--border);flex-shrink:0;cursor:pointer;transition:all 0.15s;position:relative;}
+.check-box.checked{background:var(--gold);border-color:var(--gold);}
+.check-box.checked::after{content:'✓';position:absolute;top:-1px;left:1px;font-size:9px;color:#000;font-weight:700;}
+
+/* action */
+.action-row{display:flex;gap:10px;margin-top:20px;}
+.btn-gold{flex:1;padding:13px;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.btn-gold:hover{background:var(--gold3);}
+.btn-ghost{padding:13px 20px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.btn-ghost:hover{border-color:var(--muted);color:var(--white);}
+
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:40px;}
+.tip{background:var(--card);padding:20px 18px;}
+.tip-n{font-family:var(--serif);font-size:28px;color:var(--border);font-weight:700;margin-bottom:8px;}
+.tip h4{font-size:11px;font-weight:600;color:var(--white);margin-bottom:4px;}
+.tip p{font-size:11px;color:var(--muted2);line-height:1.6;}
+
+/* ── PRINT ── */
+@media print {
+  .toolbar,.action-row,.tips,.edit-hint,.sec-head,.progress-bar,.pb-labels{display:none!important;}
+  .section{display:block!important;page-break-after:always;padding:0;}
+  body{background:white;color:#111;}
+  :root{
+    --card:#fff;--card2:#f8f8f8;--border:#ddd;--border2:#eee;
+    --white:#111;--muted:#555;--muted2:#888;
+    --gold:#8a6820;--gold2:#a07828;--gold3:#fdf6e7;--black:#fff;
+  }
+  .doc-card::before{background:var(--gold)!important;}
+  [contenteditable]{border-bottom:none!important;background:transparent!important;padding:0!important;}
+  .scope-box,.notice{border-color:#ccc!important;border-left-color:var(--gold)!important;}
+}
+
+@media (max-width:640px){
+  .toolbar{flex-wrap:wrap;padding:0 12px;}
+  .tb-tabs{overflow-x:auto;}
+  .tb-tab{padding:12px 16px;}
+  .two-col,.sig-block,.welcome-grid,.checklist,.snapshot,.pay-grid{grid-template-columns:1fr;}
+  .doc-header{flex-direction:column;gap:12px;padding:24px;}
+  .doc-body{padding:24px;}
+  .tips{grid-template-columns:1fr 1fr;}
+  .pay-block:first-child{border-right:none;border-bottom:1px solid var(--border);}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ TOOLBAR ══ -->
+<div class="toolbar" id="toolbar">
+  <div class="tb-brand">WD Documents</div>
+  <div class="tb-tabs">
+    <button class="tb-tab active" onclick="switchTab('agreement', this)">onclick="show('agreement',this)">01 — Agreement</button>
+    <button class="tb-tab" onclick="show('invoice',this)">02 — Invoice</button>
+    <button class="tb-tab" onclick="show('welcome',this)">03 — Welcome</button>
+  </div>
+  <div class="tb-actions">
+    <button class="tb-btn" onclick="clearFields()">Clear</button>
+    <button class="tb-btn gold" onclick="printDoc()">↓ Download PDF</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  01  AGREEMENT                          -->
+<!-- ═══════════════════════════════════════ -->
+<div id="agreement" class="section active">
+<div class="container">
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <div class="sec-meta">
+      <h2>Client Agreement</h2>
+      <p>Click any highlighted field to edit. Fill your details, then Download PDF.</p>
+    </div>
+  </div>
+
+  <div class="edit-hint">
+    <span>✏</span> Click any <span>underlined gold field</span> to type your details directly. All fields are editable. When done, press <span>Download PDF</span>.
+  </div>
+
+  <div class="progress-bar">
+    <div class="pb-step done"></div><div class="pb-step"></div><div class="pb-step"></div>
+  </div>
+  <div class="pb-labels">
+    <div class="pb-label active">Agreement</div>
+    <div class="pb-label">Invoice</div>
+    <div class="pb-label">Welcome</div>
+  </div>
+
+  <div class="doc-card">
+    <div class="doc-header">
+      <div class="dhl">
+        <div class="co"><span contenteditable spellcheck="false">Your Agency Name</span></div>
+        <h3>CLIENT<br>AGREEMENT</h3>
+        <div class="sub">Effective upon signing by both parties</div>
+      </div>
+      <div class="dhr">
+        <div class="rl">Document Ref</div>
+        <div class="rv"><span contenteditable spellcheck="false">AGR-001</span></div>
+        <div class="rl">Date</div>
+        <div class="rv"><span contenteditable spellcheck="false">DD / MM / YYYY</span></div>
+        <div class="rl">Version</div>
+        <div class="rv">1.0</div>
+      </div>
+    </div>
+
+    <div class="doc-body">
+      <!-- Project Snapshot -->
+      <div class="snapshot">
+        <div><div class="snap-label">Project Name</div><div class="snap-val" contenteditable spellcheck="false">Project Name</div></div>
+        <div><div class="snap-label">Package</div><div class="snap-val gold" contenteditable spellcheck="false">Package Selected</div></div>
+        <div><div class="snap-label">Total Value</div><div class="snap-val gold" contenteditable spellcheck="false">$0.00</div></div>
+        <div><div class="snap-label">Start Date</div><div class="snap-val" contenteditable spellcheck="false">DD / MM / YYYY</div></div>
+        <div><div class="snap-label">Est. Completion</div><div class="snap-val" contenteditable spellcheck="false">DD / MM / YYYY</div></div>
+        <div><div class="snap-label">Assigned Contact</div><div class="snap-val" contenteditable spellcheck="false">Your Name</div></div>
+      </div>
+
+      <!-- Parties -->
+      <div class="two-col">
+        <div class="info-block">
+          <h4>The Agency</h4>
+          <div class="field-row"><span class="fl">Company</span><span contenteditable spellcheck="false">Your Business Name</span></div>
+          <div class="field-row"><span class="fl">Address</span><span contenteditable spellcheck="false">Your Address</span></div>
+          <div class="field-row"><span class="fl">Email</span><span contenteditable spellcheck="false">you@youragency.com</span></div>
+          <div class="field-row"><span class="fl">Phone</span><span contenteditable spellcheck="false">+00 000 0000</span></div>
+          <div class="field-row"><span class="fl">Reg. No.</span><span contenteditable spellcheck="false">N/A</span></div>
+        </div>
+        <div class="info-block">
+          <h4>The Client</h4>
+          <div class="field-row"><span class="fl">Name</span><span contenteditable spellcheck="false">Client Full Name</span></div>
+          <div class="field-row"><span class="fl">Business</span><span contenteditable spellcheck="false">Client Business Name</span></div>
+          <div class="field-row"><span class="fl">Address</span><span contenteditable spellcheck="false">Client Address</span></div>
+          <div class="field-row"><span class="fl">Email</span><span contenteditable spellcheck="false">client@email.com</span></div>
+          <div class="field-row"><span class="fl">Phone</span><span contenteditable spellcheck="false">+00 000 0000</span></div>
+        </div>
+      </div>
+
+      <hr class="dd">
+
+      <div class="clause">
+        <h4>1. Definitions</h4>
+        <p>"Agency" refers to <span contenteditable spellcheck="false">Your Business Name</span>. "Client" refers to the party named above. "Project" refers to the scope of work outlined in the agreed proposal. "Deliverables" means all files, designs, and assets produced. "Working days" means Monday to Friday, excluding public holidays.</p>
+      </div>
+
+      <div class="clause">
+        <h4>2. Scope of Services & Deliverables</h4>
+        <p>The Agency agrees to provide the following services as outlined in the agreed project proposal:</p>
+        <ul>
+          <li>Website design & development (responsive — mobile, tablet, desktop)</li>
+          <li>UI/UX design — wireframes, visual design, and layout</li>
+          <li>Content integration (content provided by the Client)</li>
+          <li>Basic on-page SEO setup — meta tags, sitemap, heading structure</li>
+          <li>Cross-browser and cross-device testing</li>
+          <li><span contenteditable spellcheck="false">3</span> rounds of revisions as specified in the proposal</li>
+          <li>Post-launch support period of <span contenteditable spellcheck="false">30</span> days</li>
+        </ul>
+        <div class="scope-box"><strong>Scope Protection:</strong> Any request beyond the agreed scope — including new pages, additional design concepts, copywriting, advanced integrations, or significant structural changes — will be quoted separately and added only upon written approval.</div>
+      </div>
+
+      <div class="clause">
+        <h4>3. Payment Schedule & Terms</h4>
+        <p>A non-refundable deposit of <strong style="color:var(--white)">50%</strong> of the total project fee is required before work commences. The remaining balance is due upon project completion, before final files or site access are transferred.</p>
+        <ul>
+          <li>Deposit due before project start</li>
+          <li>Milestone payment upon design sign-off (for larger projects)</li>
+          <li>Final balance before launch or file delivery</li>
+          <li>Payment due within <span contenteditable spellcheck="false">7</span> days of invoice issue</li>
+          <li>Late payments: 5% fee applied per 7-day period overdue</li>
+          <li>Continued non-payment may result in work suspension</li>
+        </ul>
+      </div>
+
+      <div class="clause">
+        <h4>4. Client Responsibilities</h4>
+        <p>The Client agrees to provide the following in a timely manner to avoid project delays:</p>
+        <ul>
+          <li>All content: text, images, videos, and brand assets</li>
+          <li>Prompt feedback and approvals at each milestone stage</li>
+          <li>Domain and hosting access where applicable</li>
+          <li>Accurate, legally compliant, and original content</li>
+          <li>A designated contact person for the duration of the project</li>
+        </ul>
+      </div>
+
+      <div class="clause">
+        <h4>5. Timeline & Client Delays</h4>
+        <p>The estimated project timeline is outlined in the project proposal. The Agency will make every effort to meet agreed deadlines.</p>
+        <div class="scope-box"><strong>Client Delay Clause:</strong> If required materials, content, approvals, or feedback are delayed by the Client beyond <span contenteditable spellcheck="false">3</span> working days, the project timeline may shift accordingly. The Agency is not responsible for missed deadlines caused by delayed client communication or content delivery.</div>
+      </div>
+
+      <div class="clause">
+        <h4>6. Revisions, Changes & Final Approval</h4>
+        <p>This agreement includes <strong style="color:var(--white)"><span contenteditable spellcheck="false">3</span> rounds of revisions</strong>. Each round must be submitted as a single, consolidated list. Additional revisions beyond the agreed number will be billed at <span contenteditable spellcheck="false">$50</span>/hr.</p>
+        <div class="scope-box"><strong>Final Approval Clause:</strong> Once the Client provides written final approval, any further edits or changes will be treated as a new task or maintenance request, unless covered within the post-launch support period.</div>
+      </div>
+
+      <div class="clause">
+        <h4>7. Intellectual Property & Ownership</h4>
+        <p>Upon receipt of full and final payment, the Client receives full ownership of all final deliverables produced for this project. The Agency retains ownership of all work until payment is received in full.</p>
+        <ul>
+          <li>The Agency retains the right to display completed work in its portfolio and marketing materials</li>
+          <li>Third-party assets (fonts, stock images, plugins) remain subject to their respective licences</li>
+          <li>The Client is responsible for ensuring they hold rights to all content they provide</li>
+        </ul>
+      </div>
+
+      <div class="clause">
+        <h4>8. Cancellation & Termination</h4>
+        <p>Either party may terminate this agreement with <span contenteditable spellcheck="false">7</span> days written notice.</p>
+        <ul>
+          <li>The initial deposit is non-refundable upon cancellation</li>
+          <li>All completed work to the cancellation date will be invoiced and due immediately</li>
+          <li>Partial work will not be transferred until all outstanding payments are settled</li>
+        </ul>
+      </div>
+
+      <div class="clause">
+        <h4>9. Refund Policy</h4>
+        <p>The initial deposit is non-refundable as it secures the Agency's time and project slot. Should the Agency fail to deliver the agreed services without reasonable cause, a partial refund may be negotiated in good faith for work not yet completed.</p>
+      </div>
+
+      <div class="clause">
+        <h4>10. Confidentiality</h4>
+        <p>Both parties agree to keep all project details, business information, and client data confidential. Neither party will disclose proprietary information to third parties without prior written consent, except where required by law.</p>
+      </div>
+
+      <div class="clause">
+        <h4>11. Limitation of Liability</h4>
+        <p>The Agency's total liability shall not exceed the total fees paid for the project. The Agency is not liable for indirect, incidental, or consequential damages — including loss of revenue, data, or business — arising from use of the delivered work.</p>
+      </div>
+
+      <div class="clause">
+        <h4>12. Hosting, Domain & Third-Party Costs</h4>
+        <p>Unless explicitly included in the agreed package, the Client is responsible for hosting, domain, and any third-party software licence costs. The Agency accepts no liability for third-party service outages, updates, or policy changes.</p>
+      </div>
+
+      <div class="clause">
+        <h4>13. Browser & Device Compatibility</h4>
+        <p>The website will be tested on the latest versions of Chrome, Firefox, Safari, and Edge across standard screen sizes. The Agency does not guarantee compatibility with outdated browsers or custom enterprise environments.</p>
+      </div>
+
+      <div class="clause">
+        <h4>14. Legal Compliance & Content Accuracy</h4>
+        <p>The Client is solely responsible for ensuring all content provided is accurate, truthful, and legally compliant — including privacy policies, GDPR compliance, copyright compliance, and advertising standards. The Agency accepts no liability for content provided by the Client.</p>
+      </div>
+
+      <div class="clause">
+        <h4>15. Force Majeure & Governing Law</h4>
+        <p>Neither party shall be held liable for delays caused by events beyond reasonable control. This agreement is governed by the laws of <span contenteditable spellcheck="false">Your Country / Region</span>. Disputes shall first be addressed through good-faith negotiation before any formal proceedings.</p>
+      </div>
+
+      <!-- Signatures -->
+      <div class="sig-block">
+        <div class="sig-item">
+          <h4>Agency — Authorised Signature</h4>
+          <div class="sig-line"></div>
+          <div class="sig-lbl">Signature &nbsp;·&nbsp; Printed Name &nbsp;·&nbsp; Date</div>
+        </div>
+        <div class="sig-item">
+          <h4>Client — Authorised Signature</h4>
+          <div class="sig-line"></div>
+          <div class="sig-lbl">Signature &nbsp;·&nbsp; Printed Name &nbsp;·&nbsp; Date</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      <div class="brand"><span contenteditable spellcheck="false">Your Agency Name</span> — Client Agreement</div>
+      <div class="conf">Confidential</div>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn-gold" onclick="printDoc()">↓ Download PDF</button>
+    <button class="btn-ghost" onclick="nextDoc('invoice')">Next: Invoice →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  02  INVOICE                            -->
+<!-- ═══════════════════════════════════════ -->
+<div id="invoice" class="section">
+<div class="container">
+  <div class="sec-head">
+    <div class="sec-num">02</div>
+    <div class="sec-meta">
+      <h2>Professional Invoice</h2>
+      <p>Click any field to edit. Delete optional rows you don't need, then Download PDF.</p>
+    </div>
+  </div>
+
+  <div class="edit-hint">
+    <span>✏</span> Edit all <span>gold underlined fields</span> directly. Remove any <span>Optional</span> line items you don't need. Press <span>Download PDF</span> when ready.
+  </div>
+
+  <div class="progress-bar">
+    <div class="pb-step done"></div><div class="pb-step done"></div><div class="pb-step"></div>
+  </div>
+  <div class="pb-labels">
+    <div class="pb-label">Agreement</div>
+    <div class="pb-label active">Invoice</div>
+    <div class="pb-label">Welcome</div>
+  </div>
+
+  <div class="doc-card">
+    <div class="doc-header">
+      <div class="dhl">
+        <div class="co"><span contenteditable spellcheck="false">Your Agency Name</span></div>
+        <h3>INVOICE</h3>
+        <div class="sub" contenteditable spellcheck="false">Your Business Name</div>
+      </div>
+      <div class="dhr">
+        <div class="rl">Invoice No.</div>
+        <div class="rv" style="font-size:14px;color:var(--gold)"><span contenteditable spellcheck="false">INV-001</span></div>
+        <div class="rl">Date of Issue</div>
+        <div class="rv"><span contenteditable spellcheck="false">DD / MM / YYYY</span></div>
+        <div class="rl">Payment Due</div>
+        <div class="rv" style="color:var(--gold)"><span contenteditable spellcheck="false">DD / MM / YYYY</span></div>
+        <div class="rl">Currency</div>
+        <div class="rv"><span contenteditable spellcheck="false">USD</span></div>
+      </div>
+    </div>
+
+    <div class="doc-body">
+
+      <div class="snapshot">
+        <div><div class="snap-label">Project</div><div class="snap-val" contenteditable spellcheck="false">Project Name</div></div>
+        <div><div class="snap-label">Agreement Ref</div><div class="snap-val" contenteditable spellcheck="false">AGR-001</div></div>
+        <div><div class="snap-label">PO Reference</div><div class="snap-val" contenteditable spellcheck="false">N/A</div></div>
+      </div>
+
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Billed From</h4>
+          <div class="field-row"><span contenteditable spellcheck="false">Your Business Name</span></div>
+          <div class="field-row"><span contenteditable spellcheck="false">Your Address</span></div>
+          <div class="field-row"><span contenteditable spellcheck="false">you@youragency.com</span></div>
+          <div class="field-row"><span contenteditable spellcheck="false">+00 000 0000</span></div>
+          <div class="field-row"><span class="fl">Tax/VAT No.</span><span contenteditable spellcheck="false">N/A</span></div>
+        </div>
+        <div class="info-block">
+          <h4>Billed To</h4>
+          <div class="field-row"><span contenteditable spellcheck="false">Client Name</span></div>
+          <div class="field-row"><span contenteditable spellcheck="false">Client Business Name</span></div>
+          <div class="field-row"><span contenteditable spellcheck="false">Client Address</span></div>
+          <div class="field-row"><span contenteditable spellcheck="false">client@email.com</span></div>
+          <div class="field-row"><span contenteditable spellcheck="false">+00 000 0000</span></div>
+        </div>
+      </div>
+
+      <hr class="dd">
+      <div class="dt">Services & Line Items</div>
+
+      <table class="svc-table">
+        <thead>
+          <tr>
+            <th style="width:50%">Description</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="iname" contenteditable spellcheck="false">Website Design & Development</div><div class="idesc" contenteditable spellcheck="false">Full responsive site — UI/UX design, development, mobile-optimised</div></td>
+            <td contenteditable spellcheck="false">1</td>
+            <td contenteditable spellcheck="false">$500</td>
+            <td contenteditable spellcheck="false">$500</td>
+          </tr>
+          <tr>
+            <td><div class="iname" contenteditable spellcheck="false">SEO Setup & On-Page Optimisation</div><div class="idesc" contenteditable spellcheck="false">Meta tags, sitemap, Search Console, heading structure</div></td>
+            <td contenteditable spellcheck="false">1</td>
+            <td contenteditable spellcheck="false">$100</td>
+            <td contenteditable spellcheck="false">$100</td>
+          </tr>
+          <tr>
+            <td><div class="iname" contenteditable spellcheck="false">Post-Launch Support — 30 Days</div><div class="idesc" contenteditable spellcheck="false">Bug fixes, minor content edits, performance monitoring</div></td>
+            <td contenteditable spellcheck="false">1</td>
+            <td contenteditable spellcheck="false">$80</td>
+            <td contenteditable spellcheck="false">$80</td>
+          </tr>
+          <tr>
+            <td><div class="iname" contenteditable spellcheck="false">Additional Revisions</div><div class="idesc" contenteditable spellcheck="false">Beyond included revision rounds</div><span class="opt-tag">Optional</span></td>
+            <td contenteditable spellcheck="false">—</td>
+            <td contenteditable spellcheck="false">$50/hr</td>
+            <td contenteditable spellcheck="false">—</td>
+          </tr>
+          <tr>
+            <td><div class="iname" contenteditable spellcheck="false">Urgent Delivery Fee</div><div class="idesc" contenteditable spellcheck="false">Rush turnaround outside standard timeline</div><span class="opt-tag">Optional</span></td>
+            <td contenteditable spellcheck="false">—</td>
+            <td contenteditable spellcheck="false">—</td>
+            <td contenteditable spellcheck="false">—</td>
+          </tr>
+          <tr>
+            <td><div class="iname" contenteditable spellcheck="false">Domain / Hosting Renewal</div><div class="idesc" contenteditable spellcheck="false">Annual renewal — third-party cost passed through</div><span class="opt-tag">Optional</span></td>
+            <td contenteditable spellcheck="false">—</td>
+            <td contenteditable spellcheck="false">—</td>
+            <td contenteditable spellcheck="false">—</td>
+          </tr>
+          <tr>
+            <td><div class="iname" contenteditable spellcheck="false">Monthly Maintenance Retainer</div><div class="idesc" contenteditable spellcheck="false">Ongoing updates, backups, security monitoring</div><span class="opt-tag">Optional</span></td>
+            <td contenteditable spellcheck="false">—</td>
+            <td contenteditable spellcheck="false">—</td>
+            <td contenteditable spellcheck="false">—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="totals-wrap">
+        <div class="totals-block">
+          <div class="total-row"><span class="lbl">Subtotal</span><span contenteditable spellcheck="false">$680</span></div>
+          <div class="total-row"><span class="lbl">Tax / VAT</span><span contenteditable spellcheck="false">$0</span></div>
+          <div class="total-row"><span class="lbl">Discount</span><span contenteditable spellcheck="false">$0</span></div>
+          <div class="total-row" style="border-top:1px solid var(--border);padding-top:8px;margin-top:4px;"><span class="lbl">Project Total</span><span contenteditable spellcheck="false">$680</span></div>
+          <div class="total-row dep"><span class="lbl">Deposit Received (50%)</span><span contenteditable spellcheck="false">— $340</span></div>
+          <div class="total-row grand"><span>Balance Due</span><span contenteditable spellcheck="false">$340</span></div>
+        </div>
+      </div>
+
+      <hr class="dd">
+      <div class="dt">Payment Methods</div>
+
+      <div class="pay-grid">
+        <div class="pay-block">
+          <h4>Bank Transfer</h4>
+          <p>
+            Bank: <span contenteditable spellcheck="false">Bank Name</span><br>
+            Account Name: <span contenteditable spellcheck="false">Your Name</span><br>
+            Account No: <span contenteditable spellcheck="false">000 000 0000</span><br>
+            IBAN / Swift: <span contenteditable spellcheck="false">N/A</span><br>
+            Reference: <span contenteditable spellcheck="false">INV-001</span>
+          </p>
+        </div>
+        <div class="pay-block">
+          <h4>Online Payment</h4>
+          <p>
+            Stripe link:<br>
+            <span contenteditable spellcheck="false">https://stripe.com/pay/your-link</span><br><br>
+            PayPal:<br>
+            <span contenteditable spellcheck="false">paypal.me/yourname</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="notice">
+        <strong>Payment Confirmation:</strong> Please send confirmation to <span contenteditable spellcheck="false">you@youragency.com</span> once transferred.<br>
+        <strong>Late Payment Notice:</strong> Invoices unpaid after the due date will incur a 5% late fee per 7-day period. Future work may be paused until outstanding balances are cleared.
+      </div>
+
+      <hr class="dd">
+      <div class="dt">Notes</div>
+      <p style="font-size:12px;color:#666;line-height:1.9;" contenteditable spellcheck="false">Payment terms are governed by the signed Client Agreement. Please reach out before the due date with any questions. Thank you for choosing Your Agency Name — we look forward to continuing to work with you.</p>
+    </div>
+
+    <div class="doc-footer">
+      <div class="brand"><span contenteditable spellcheck="false">Your Agency Name</span> — Invoice · <span contenteditable spellcheck="false">INV-001</span></div>
+      <div class="conf">Thank you for your business</div>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn-gold" onclick="printDoc()">↓ Download PDF</button>
+    <button class="btn-ghost" onclick="nextDoc('welcome')">Next: Welcome →</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  03  WELCOME                            -->
+<!-- ═══════════════════════════════════════ -->
+<div id="welcome" class="section">
+<div class="container">
+  <div class="sec-head">
+    <div class="sec-num">03</div>
+    <div class="sec-meta">
+      <h2>Welcome & Onboarding</h2>
+      <p>Fill all fields, tick the checklist items as received, then Download PDF.</p>
+    </div>
+  </div>
+
+  <div class="edit-hint">
+    <span>✏</span> Click any <span>underlined field</span> to edit. Tick checklist boxes as you receive assets from the client. Press <span>Download PDF</span> when ready.
+  </div>
+
+  <div class="progress-bar">
+    <div class="pb-step done"></div><div class="pb-step done"></div><div class="pb-step done"></div>
+  </div>
+  <div class="pb-labels">
+    <div class="pb-label">Agreement</div>
+    <div class="pb-label">Invoice</div>
+    <div class="pb-label active">Welcome</div>
+  </div>
+
+  <div class="doc-card">
+    <div class="doc-header">
+      <div class="dhl">
+        <div class="co"><span contenteditable spellcheck="false">Your Agency Name</span></div>
+        <h3>WELCOME</h3>
+        <div class="sub">Your complete onboarding guide</div>
+      </div>
+      <div class="dhr">
+        <div class="rl">Prepared For</div>
+        <div class="rv"><span contenteditable spellcheck="false">Client Name</span></div>
+        <div class="rl">Prepared By</div>
+        <div class="rv"><span contenteditable spellcheck="false">Your Name</span></div>
+        <div class="rl">Date</div>
+        <div class="rv"><span contenteditable spellcheck="false">DD / MM / YYYY</span></div>
+      </div>
+    </div>
+
+    <div class="doc-body">
+
+      <div class="welcome-letter">
+        Hey <strong contenteditable spellcheck="false">Client Name</strong>,<br><br>
+        <span contenteditable spellcheck="false">Thank you for choosing to work with us. We're genuinely excited to bring your vision to life and committed to making this process as smooth, transparent, and enjoyable as possible. This document contains everything you need to get started — your links, your project process, communication details, and what we need from you. Keep it handy throughout the project.</span><br><br>
+        — <strong><span contenteditable spellcheck="false">Your Name</span>, <span contenteditable spellcheck="false">Your Agency Name</span></strong>
+      </div>
+
+      <div class="dt">Project Snapshot</div>
+      <div class="snapshot" style="margin-bottom:28px;">
+        <div><div class="snap-label">Project Name</div><div class="snap-val" contenteditable spellcheck="false">Project Name</div></div>
+        <div><div class="snap-label">Package</div><div class="snap-val gold" contenteditable spellcheck="false">Package Selected</div></div>
+        <div><div class="snap-label">Project Value</div><div class="snap-val gold" contenteditable spellcheck="false">$0.00</div></div>
+        <div><div class="snap-label">Start Date</div><div class="snap-val" contenteditable spellcheck="false">DD / MM / YYYY</div></div>
+        <div><div class="snap-label">Estimated Launch</div><div class="snap-val" contenteditable spellcheck="false">DD / MM / YYYY</div></div>
+        <div><div class="snap-label">Your Contact</div><div class="snap-val" contenteditable spellcheck="false">Your Name</div></div>
+      </div>
+
+      <hr class="dd">
+      <div class="dt">Your Quick Links</div>
+      <div class="welcome-grid">
+        <div class="wg">
+          <h4>Signed Agreement</h4>
+          <div class="link-ph" contenteditable spellcheck="false">→ Paste link here</div>
+          <p>Your signed contract stored here for reference.</p>
+        </div>
+        <div class="wg">
+          <h4>Invoice</h4>
+          <div class="link-ph" contenteditable spellcheck="false">→ Paste link here</div>
+          <p>Your invoice and payment record.</p>
+        </div>
+        <div class="wg">
+          <h4>Client Portal</h4>
+          <div class="link-ph" contenteditable spellcheck="false">→ Paste Notion / Drive link</div>
+          <p>Track the project, view files, leave feedback, and stay updated — all in one place.</p>
+        </div>
+        <div class="wg">
+          <h4>File Delivery Folder</h4>
+          <div class="link-ph" contenteditable spellcheck="false">→ Paste Google Drive / Dropbox link</div>
+          <p>All final deliverables will be uploaded here upon project completion.</p>
+        </div>
+      </div>
+
+      <hr class="dd">
+      <div class="dt">Communication & Availability</div>
+      <div class="welcome-grid">
+        <div class="wg">
+          <h4>How to Reach Us</h4>
+          <p>
+            Email: <span contenteditable spellcheck="false" style="color:var(--gold)">you@youragency.com</span><br>
+            WhatsApp: <span contenteditable spellcheck="false" style="color:var(--gold)">+00 000 0000</span><br>
+            Portal: <span contenteditable spellcheck="false" style="color:var(--gold)">Portal link</span><br>
+            Emergency: <span contenteditable spellcheck="false" style="color:var(--gold)">WhatsApp only</span>
+          </p>
+        </div>
+        <div class="wg">
+          <h4>Office Hours & Response Times</h4>
+          <p>
+            Available: <strong style="color:var(--white)"><span contenteditable spellcheck="false">Mon–Fri, 9am–6pm</span></strong><br>
+            Standard reply: <span contenteditable spellcheck="false">within 1 business day</span><br>
+            Revision turnaround: <span contenteditable spellcheck="false">2 business days</span><br>
+            Preferred channel: <span contenteditable spellcheck="false">Email</span>
+          </p>
+        </div>
+      </div>
+
+      <hr class="dd">
+      <div class="dt">Project Process & Timeline</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-num">1</div><div><div class="tl-title">Discovery & Strategy</div><div class="tl-desc" contenteditable spellcheck="false">Brief review, goals, sitemap planning, and content strategy</div></div></div>
+        <div class="tl-item"><div class="tl-num">2</div><div><div class="tl-title">Wireframes & Structure</div><div class="tl-desc" contenteditable spellcheck="false">Page structure, layout planning, user flow mapping</div></div></div>
+        <div class="tl-item"><div class="tl-num">3</div><div><div class="tl-title">Design Concepts</div><div class="tl-desc" contenteditable spellcheck="false">Homepage design, visual direction, and colour palette presented for approval</div></div></div>
+        <div class="tl-item"><div class="tl-num">4</div><div><div class="tl-title">Full Website Design</div><div class="tl-desc" contenteditable spellcheck="false">All pages designed and sent for client review</div></div></div>
+        <div class="tl-item"><div class="tl-num">5</div><div><div class="tl-title">Development Phase</div><div class="tl-desc" contenteditable spellcheck="false">Full build — responsive, optimised, content integrated</div></div></div>
+        <div class="tl-item"><div class="tl-num">6</div><div><div class="tl-title">Testing & Quality Check</div><div class="tl-desc" contenteditable spellcheck="false">Cross-browser, cross-device testing, speed optimisation</div></div></div>
+        <div class="tl-item"><div class="tl-num">7</div><div><div class="tl-title">Final Revisions</div><div class="tl-desc" contenteditable spellcheck="false">Last round of amends before launch sign-off</div></div></div>
+        <div class="tl-item"><div class="tl-num">8</div><div><div class="tl-title">Launch</div><div class="tl-desc" contenteditable spellcheck="false">Site goes live — domain connected, final checks completed</div></div></div>
+        <div class="tl-item"><div class="tl-num">9</div><div><div class="tl-title" contenteditable spellcheck="false">Post-Launch Support (30 Days)</div><div class="tl-desc" contenteditable spellcheck="false">Bug fixes, small edits, and training handover if needed</div></div></div>
+      </div>
+
+      <hr class="dd">
+      <div class="dt">How Revisions Work</div>
+      <div style="background:var(--card2);border:1px solid var(--border);padding:20px 24px;margin-bottom:28px;">
+        <div class="bullets">
+          <div class="bullet"><div class="bullet-dot">→</div><div>You receive <strong><span contenteditable spellcheck="false">3</span> rounds of revisions</strong> included in your package</div></div>
+          <div class="bullet"><div class="bullet-dot">→</div><div>Submit all feedback in <strong>one consolidated list</strong> per round via portal or email</div></div>
+          <div class="bullet"><div class="bullet-dot">→</div><div>Revisions are turned around within <strong><span contenteditable spellcheck="false">2</span> business days</strong></div></div>
+          <div class="bullet"><div class="bullet-dot">→</div><div>Additional revisions beyond included rounds are billed at <strong><span contenteditable spellcheck="false">$50</span>/hr</strong></div></div>
+          <div class="bullet"><div class="bullet-dot">→</div><div>After final written approval, further changes are treated as a <strong>new maintenance task</strong></div></div>
+        </div>
+      </div>
+
+      <div class="dt">Before We Begin — Client Checklist</div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Please gather and send us the following before the project starts. Tick each item as you send it.</p>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Logo files (SVG, PNG — transparent background)</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Brand colours and fonts (if available)</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>All website text / copy content</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Images and media (high resolution)</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Social media profile links</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Contact information (phone, email, address)</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Reference websites you like (style direction)</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Domain / hosting login details (if applicable)</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Existing brand guidelines or style guide</div>
+        <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div>Third-party integrations needed (booking, forms)</div>
+      </div>
+
+      <hr class="dd">
+      <div class="dt">After Launch</div>
+      <div class="bullets">
+        <div class="bullet"><div class="bullet-dot">→</div><div><strong>Support Period:</strong> You have <span contenteditable spellcheck="false">30</span> days of post-launch support — reach out for bugs or small fixes</div></div>
+        <div class="bullet"><div class="bullet-dot">→</div><div><strong>Handover / Training:</strong> We'll walk you through how to manage and update your site before closing the project</div></div>
+        <div class="bullet"><div class="bullet-dot">→</div><div><strong>Maintenance Retainer:</strong> Monthly maintenance packages are available — ask us for details</div></div>
+        <div class="bullet"><div class="bullet-dot">→</div><div><strong>Future Projects:</strong> As a returning client, you receive priority scheduling and preferential rates</div></div>
+      </div>
+
+    </div>
+    <div class="doc-footer">
+      <div class="brand"><span contenteditable spellcheck="false">Your Agency Name</span></div>
+      <div class="conf">We're excited to work with you</div>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn-gold" onclick="printDoc()">↓ Download PDF</button>
+    <button class="btn-ghost" onclick="nextDoc('agreement')">← Back to Agreement</button>
+  </div>
+
+  <div class="tips">
+    <div class="tip"><div class="tip-n">01</div><h4>Edit directly</h4><p>Click any gold field to type. All fields are live-editable in the browser.</p></div>
+    <div class="tip"><div class="tip-n">02</div><h4>Send in order</h4><p>Agreement → Invoice → Welcome builds trust at every step.</p></div>
+    <div class="tip"><div class="tip-n">03</div><h4>Download PDF</h4><p>Press Download PDF. Enable "Background graphics" in print settings for dark style.</p></div>
+    <div class="tip"><div class="tip-n">04</div><h4>Get it signed</h4><p>Use DocuSign, Adobe Sign, or print and scan. Always keep a signed copy on file.</p></div>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ── Tab switching
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tb-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const map = {agreement:0, invoice:1, welcome:2};
+  document.querySelectorAll('.tb-tab')[map[id]].classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function nextDoc(id) {
+  show(id, null);
+}
+
+// ── Download PDF (current section only)
+function printDoc() {
+  window.print();
+}
+
+// ── Checkbox toggle
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+// ── Clear all fields to blank
+function clearFields() {
+  if (!confirm('Reset all editable fields to default placeholder text?')) return;
+  location.reload();
+}
+
+// ── Placeholder behaviour: select all on focus
+document.querySelectorAll('[contenteditable]').forEach(el => {
+  el.addEventListener('focus', function() {
+    const range = document.createRange();
+    range.selectNodeContents(this);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+});
+</script>
+</body>
+</html>
