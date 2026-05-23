@@ -1,0 +1,592 @@
+/* Dark theme variables */
+:root {
+  --black: #080808;
+  --card: #111;
+  --card2: #161616;
+  --border: #242424;
+  --border2: #1e1e1e;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --gold3: rgba(201, 168, 76, 0.08);
+  --white: #f0ece3;
+  --muted: #777;
+  --muted2: #555;
+}
+
+.container {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+.container_inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8, 8, 8, 0.97);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tbBrand {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  color: var(--gold);
+  padding: 14px 24px 14px 0;
+  border-right: 1px solid var(--border);
+  margin-right: 16px;
+  white-space: nowrap;
+}
+
+.tbTabs {
+  display: flex;
+  gap: 0;
+  flex: 1;
+}
+
+.tbTab {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  color: var(--muted);
+  padding: 16px 24px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  position: relative;
+  white-space: nowrap;
+}
+
+.tbTab:hover {
+  color: var(--gold);
+  background: var(--gold3);
+}
+
+.tbTab.active {
+  color: var(--gold);
+  background: var(--gold3);
+}
+
+.tbTab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold);
+}
+
+.tbActions {
+  display: flex;
+  gap: 8px;
+  padding-left: 16px;
+  border-left: 1px solid var(--border);
+}
+
+.tbBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 8px 18px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.tbBtn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.tbBtn.gold {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.tbBtn.gold:hover {
+  background: var(--gold3);
+}
+
+/* ── SECTION & CONTENT ── */
+.section {
+  display: block;
+  padding: 40px 0 80px;
+}
+
+/* ── EDITABLE INPUTS ── */
+.editableInput {
+  outline: none;
+  border: none;
+  border-bottom: 1px dashed rgba(201, 168, 76, 0.35);
+  background: transparent;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: inherit;
+  min-width: 80px;
+  display: inline-block;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: text;
+  position: relative;
+  padding: 0 4px;
+}
+
+.editableInput:hover {
+  border-bottom-color: rgba(201, 168, 76, 0.7);
+}
+
+.editableInput:focus {
+  background: rgba(201, 168, 76, 0.07);
+  border-bottom: 1px solid var(--gold);
+  border-radius: 2px 2px 0 0;
+}
+
+/* ── TEXTAREA FOR LONG FORM CLAUSES ── */
+.editableTextarea {
+  width: 100%;
+  min-height: 80px;
+  outline: none;
+  border: none;
+  border-left: 4px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  padding: 12px 10px;
+  margin-bottom: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.editableTextarea:focus {
+  background: rgba(201, 168, 76, 0.03);
+  color: var(--white);
+  border-left-color: var(--gold);
+}
+
+/* ── EDIT HINT ── */
+.editHint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(201, 168, 76, 0.05);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  padding: 10px 16px;
+  margin-bottom: 32px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.editHint span {
+  color: var(--gold);
+}
+
+/* ── PROGRESS BAR ── */
+.progressBar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.pbStep {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+}
+
+.pbStep.done {
+  background: var(--gold);
+}
+
+.pbLabels {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 36px;
+}
+
+.pbLabel {
+  flex: 1;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  text-align: center;
+}
+
+.pbLabel.active {
+  color: var(--gold);
+}
+
+/* ── SECTION HEAD ── */
+.secHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.secNum {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 64px;
+  color: var(--border);
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.secMeta h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.secMeta p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ── DOC CARD ── */
+.docCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.docCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold),
+    var(--gold2),
+    var(--gold),
+    transparent
+  );
+}
+
+.docHeader {
+  padding: 36px 48px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dhl .co {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.dhl h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.dhl .sub {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+.dhr {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.dhr .rl {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 3px;
+  margin-top: 10px;
+}
+
+.dhr .rv {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.dhr .rv:first-of-type {
+  margin-top: 0;
+}
+
+.docBody {
+  padding: 32px 48px 40px;
+}
+
+.docFooter {
+  padding: 16px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.docFooter .brand {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 12px;
+  color: var(--muted2);
+}
+
+.docFooter .brand span {
+  color: var(--gold);
+}
+
+.docFooter .conf {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+}
+
+/* ── SNAPSHOT ── */
+.snapshot {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--gold);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Clause and divider styles */
+.dd {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+.dt {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.clause {
+  margin-bottom: 22px;
+}
+
+.clause h4 {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 9px;
+}
+
+.clause textarea {
+  resize: vertical;
+}
+
+.snapLabel {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 4px;
+}
+
+.snapVal {
+  font-size: 12px;
+  color: var(--white);
+}
+
+.snapVal.gold {
+  color: var(--gold);
+}
+
+/* ── TWO COLUMN LAYOUT ── */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+.infoBlock h4 {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.fieldRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 7px;
+}
+
+.fl {
+  font-size: 9px;
+  color: var(--muted2);
+  white-space: nowrap;
+  min-width: 80px;
+  letter-spacing: 0.5px;
+}
+
+/* ── ACTION BUTTONS ── */
+.actionRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btnGold {
+  flex: 1;
+  padding: 13px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnGold:hover {
+  background: var(--gold3);
+}
+
+.btnGhost {
+  padding: 13px 20px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnGhost:hover {
+  border-color: var(--muted);
+  color: var(--white);
+}
+
+/* ── PRINT STYLES ── */
+@media print {
+  .toolbar,
+  .actionRow,
+  .editHint,
+  .secHead,
+  .progressBar,
+  .pbLabels {
+    display: none !important;
+  }
+
+  .section {
+    display: block !important;
+    page-break-after: always;
+    padding: 0;
+  }
+
+  body,
+  .container {
+    background: white !important;
+    color: #111 !important;
+  }
+
+  .docCard::before {
+    background: var(--gold) !important;
+  }
+
+  .editableInput {
+    border-bottom: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .toolbar {
+    flex-wrap: wrap;
+    padding: 0 12px;
+  }
+
+  .tbTabs {
+    overflow-x: auto;
+  }
+
+  .tbTab {
+    padding: 12px 16px;
+  }
+
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+
+  .snapshot {
+    grid-template-columns: 1fr;
+  }
+
+  .docHeader {
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+  }
+
+  .docBody {
+    padding: 24px;
+  }
+}

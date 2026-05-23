@@ -1,0 +1,758 @@
+:root {
+  --black: #080808;
+  --card: #111;
+  --card2: #161616;
+  --border: #242424;
+  --border2: #1e1e1e;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --gold3: rgba(201, 168, 76, 0.08);
+  --white: #f0ece3;
+  --muted: #777;
+  --muted2: #555;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+}
+
+.container {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8, 8, 8, 0.97);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tbBrand {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--gold);
+  padding: 14px 24px 14px 0;
+  border-right: 1px solid var(--border);
+  margin-right: 16px;
+  white-space: nowrap;
+}
+
+.tbTabs {
+  display: flex;
+  gap: 0;
+  flex: 1;
+}
+
+.tbTab {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  color: var(--muted);
+  padding: 16px 24px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  position: relative;
+  white-space: nowrap;
+}
+
+.tbTab:hover {
+  color: var(--gold);
+  background: var(--gold3);
+}
+
+.tbTab.active {
+  color: var(--gold);
+  background: var(--gold3);
+}
+
+.tbTab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold);
+}
+
+.tbActions {
+  display: flex;
+  gap: 8px;
+  padding-left: 16px;
+  border-left: 1px solid var(--border);
+}
+
+.tbBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 8px 18px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.tbBtn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.tbBtn.gold {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.tbBtn.gold:hover {
+  background: var(--gold3);
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 40px 0 80px;
+}
+
+.container_inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── EDIT HINT ── */
+.editHint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(201, 168, 76, 0.05);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  padding: 10px 16px;
+  margin-bottom: 32px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.editHint span {
+  color: var(--gold);
+}
+
+/* ── PROGRESS BAR ── */
+.progressBar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.pbStep {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+}
+
+.pbStep.done {
+  background: var(--gold);
+}
+
+.pbLabels {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 36px;
+}
+
+.pbLabel {
+  flex: 1;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  text-align: center;
+}
+
+.pbLabel.active {
+  color: var(--gold);
+}
+
+/* ── SECTION HEAD ── */
+.secHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.secNum {
+  font-family: var(--serif);
+  font-size: 64px;
+  color: var(--border);
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.secMeta h2 {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.secMeta p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ── DOCUMENT CARD ── */
+.docCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.docCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold),
+    var(--gold2),
+    var(--gold),
+    transparent
+  );
+}
+
+/* ── DOCUMENT HEADER ── */
+.docHeader {
+  padding: 36px 48px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dhl .co {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.dhl h3 {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.dhl .sub {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+.dhr {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.dhr .rl {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 3px;
+  margin-top: 10px;
+}
+
+.dhr .rv {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.dhr .rv:first-of-type {
+  margin-top: 0;
+}
+
+/* ── EDITABLE INPUT ── */
+.editableInput {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed rgba(201, 168, 76, 0.35);
+  color: var(--white);
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0 4px;
+  outline: none;
+  cursor: text;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.editableInput:hover {
+  border-bottom-color: rgba(201, 168, 76, 0.7);
+}
+
+.editableInput:focus {
+  background: rgba(201, 168, 76, 0.07);
+  border-bottom: 1px solid var(--gold);
+  border-radius: 2px 2px 0 0;
+}
+
+/* ── DOCUMENT BODY ── */
+.docBody {
+  padding: 32px 48px 40px;
+}
+
+/* ── SNAPSHOT ── */
+.snapshot {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--gold);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.snapLabel {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 4px;
+}
+
+.snapVal {
+  font-size: 12px;
+  color: var(--white);
+}
+
+.snapVal.gold {
+  color: var(--gold);
+}
+
+/* ── DIVIDER / TITLE ── */
+.dd {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+.dt {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+/* ── WELCOME LETTER ── */
+.welcomeLetter {
+  background: var(--card2);
+  border-left: 2px solid var(--gold);
+  padding: 24px 28px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: #999;
+  line-height: 1.9;
+}
+
+.welcomeLetter strong {
+  color: var(--white);
+}
+
+/* ── WELCOME GRID ── */
+.welcomeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+
+.wg {
+  background: var(--card);
+  padding: 20px 24px;
+}
+
+.wg h4 {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.wg p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.linkPh {
+  display: inline-block;
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px dashed rgba(201, 168, 76, 0.25);
+  color: var(--gold);
+  font-size: 10px;
+  padding: 4px 10px;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.linkInput {
+  width: 100%;
+  border: none;
+  border-bottom: 1px dashed rgba(201, 168, 76, 0.35);
+  background: transparent;
+  color: var(--white);
+  padding: 4px 0;
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.linkInput:focus {
+  border-bottom-color: var(--gold);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.tlItem {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border2);
+  align-items: flex-start;
+}
+
+.tlItem:last-child {
+  border-bottom: none;
+}
+
+.tlNum {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+  width: 22px;
+  line-height: 1.2;
+}
+
+.tlTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 1px;
+}
+
+.tlDesc {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ── REVISION BOX ── */
+.revisionBox {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+
+/* ── BULLETS ── */
+.bullets {
+  display: grid;
+  gap: 0;
+}
+
+.bullet {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border2);
+  line-height: 1.5;
+}
+
+.bullet:last-child {
+  border-bottom: none;
+}
+
+.bulletDot {
+  color: var(--gold);
+  font-size: 10px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.bullet strong {
+  color: #bbb;
+}
+
+/* ── CHECKLIST ── */
+.checklistNote {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.checklist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 8px;
+}
+
+.checkItem {
+  background: var(--card);
+  padding: 10px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.checkBox {
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.checkBox:hover {
+  border-color: var(--gold);
+}
+
+.checkBox.checked {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.checkBox.checked::after {
+  content: '✓';
+  position: absolute;
+  top: -1px;
+  left: 1px;
+  font-size: 9px;
+  color: #000;
+  font-weight: 700;
+}
+
+/* ── DOCUMENT FOOTER ── */
+.docFooter {
+  padding: 16px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: 12px;
+  color: var(--muted2);
+}
+
+.brand span {
+  color: var(--gold);
+}
+
+.conf {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted2);
+}
+
+/* ── ACTION ROW ── */
+.actionRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btnGold {
+  flex: 1;
+  padding: 13px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnGold:hover {
+  background: var(--gold3);
+}
+
+.btnGhost {
+  padding: 13px 20px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnGhost:hover {
+  border-color: var(--muted);
+  color: var(--white);
+}
+
+/* ── TIPS ── */
+.tips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+.tip {
+  background: var(--card);
+  padding: 20px 18px;
+}
+
+.tipN {
+  font-family: var(--serif);
+  font-size: 28px;
+  color: var(--border);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.tip h4 {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.tip p {
+  font-size: 11px;
+  color: var(--muted2);
+  line-height: 1.6;
+}
+
+/* ── PRINT ── */
+@media print {
+  .toolbar,
+  .actionRow,
+  .tips,
+  .editHint,
+  .secHead,
+  .progressBar,
+  .pbLabels {
+    display: none !important;
+  }
+
+  .section {
+    display: block !important;
+    page-break-after: always;
+    padding: 0;
+  }
+
+  .container {
+    background: white;
+    color: #111;
+  }
+
+  .docCard::before {
+    background: #8a6820 !important;
+  }
+
+  .editableInput {
+    border-bottom: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .toolbar {
+    flex-wrap: wrap;
+    padding: 0 12px;
+  }
+
+  .tbTabs {
+    overflow-x: auto;
+  }
+
+  .tbTab {
+    padding: 12px 16px;
+  }
+
+  .snapshot,
+  .welcomeGrid,
+  .checklist,
+  .tips {
+    grid-template-columns: 1fr;
+  }
+
+  .docHeader {
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+  }
+
+  .docBody {
+    padding: 24px;
+  }
+
+  .tips {
+    grid-template-columns: 1fr 1fr;
+  }
+}
