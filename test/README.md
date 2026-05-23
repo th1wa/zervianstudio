@@ -60,6 +60,17 @@ npm run build
 npm run preview
 ```
 
+### 5. Deploy to Vercel
+1. Push this repository to GitHub.
+2. In Vercel, import the repository.
+3. Use the default settings:
+   - Framework Preset: `Other`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+4. Add `vercel.json` to the repo so client-side routing works correctly on refresh.
+
+> Vercel will serve all routes through `index.html`, which is required for React Router apps.
+
 ## How Data Synchronization Works
 
 ### Global State (Context API)
