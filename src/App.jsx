@@ -17,6 +17,7 @@ function App() {
           <Route path="/agreement" element={<AgreementPage />} />
           <Route path="/invoice" element={<InvoicePage />} />
           <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="*" element={<SetupPage />} />
         </Routes>
       </Router>
     </DocumentProvider>
