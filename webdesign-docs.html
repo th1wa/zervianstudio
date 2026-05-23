@@ -503,6 +503,139 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-siz
       </div>
     </div>
 
+    <!-- SERVICES & PRICING SECTION -->
+    <div style="margin-bottom:40px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+        <h3 style="font-family:var(--serif);font-size:24px;color:var(--gold);margin:0;border-bottom:1px solid var(--border);padding-bottom:12px;flex:1;">SERVICES & PRICING</h3>
+        <div style="display:flex;gap:8px;margin-left:24px;">
+          <button id="currencyUSD" class="tb-btn" onclick="changeCurrency('USD')" style="border-color:var(--gold);color:var(--gold);background:var(--gold3);font-size:10px;padding:6px 12px;">USD</button>
+          <button id="currencyLKR" class="tb-btn" onclick="changeCurrency('LKR')" style="font-size:10px;padding:6px 12px;">LKR</button>
+        </div>
+      </div>
+      
+      <div style="background:var(--card2);border:1px solid var(--border);padding:20px;margin-bottom:24px;">
+        <h4 style="color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Standard Services (Included)</h4>
+        
+        <div style="display:grid;gap:16px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1px solid var(--border);">
+            <input type="checkbox" id="svc_website" checked onchange="calculateServices()" style="width:18px;height:18px;cursor:pointer;">
+            <div style="flex:1;">
+              <div style="color:var(--white);font-weight:500;margin-bottom:2px;">Website Design & Development</div>
+              <div style="color:var(--muted2);font-size:11px;">Full responsive site — UI/UX design, development, mobile-optimised</div>
+            </div>
+            <div style="text-align:right;">
+              <input type="number" id="price_website_input" value="500" min="0" step="10" style="width:70px;padding:4px 6px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;margin-bottom:4px;text-align:right;" onchange="calculateServices()">
+              <div style="color:var(--muted);font-size:10px;"><span id="currency_symbol">$</span><span id="price_website">500</span></div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1px solid var(--border);">
+            <input type="checkbox" id="svc_seo" checked onchange="calculateServices()" style="width:18px;height:18px;cursor:pointer;">
+            <div style="flex:1;">
+              <div style="color:var(--white);font-weight:500;margin-bottom:2px;">SEO Setup & On-Page Optimisation</div>
+              <div style="color:var(--muted2);font-size:11px;">Meta tags, sitemap, Search Console, heading structure</div>
+            </div>
+            <div style="text-align:right;">
+              <input type="number" id="price_seo_input" value="100" min="0" step="10" style="width:70px;padding:4px 6px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;margin-bottom:4px;text-align:right;" onchange="calculateServices()">
+              <div style="color:var(--muted);font-size:10px;"><span id="currency_symbol">$</span><span id="price_seo">100</span></div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1px solid var(--border);">
+            <input type="checkbox" id="svc_support" checked onchange="calculateServices()" style="width:18px;height:18px;cursor:pointer;">
+            <div style="flex:1;">
+              <div style="color:var(--white);font-weight:500;margin-bottom:2px;">Post-Launch Support — 30 Days</div>
+              <div style="color:var(--muted2);font-size:11px;">Bug fixes, minor content edits, performance monitoring</div>
+            </div>
+            <div style="text-align:right;">
+              <input type="number" id="price_support_input" value="80" min="0" step="10" style="width:70px;padding:4px 6px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;margin-bottom:4px;text-align:right;" onchange="calculateServices()">
+              <div style="color:var(--muted);font-size:10px;"><span id="currency_symbol">$</span><span id="price_support">80</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--card2);border:1px solid var(--border);padding:20px;margin-bottom:24px;">
+        <h4 style="color:var(--gold);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Optional Add-ons</h4>
+        
+        <div style="display:grid;gap:16px;" id="addonsContainer">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1px solid var(--border);opacity:0.7;">
+            <input type="checkbox" id="svc_revisions" onchange="calculateServices()" style="width:18px;height:18px;cursor:pointer;">
+            <div style="flex:1;">
+              <div style="color:var(--white);font-weight:500;margin-bottom:2px;">Additional Revisions</div>
+              <div style="color:var(--muted2);font-size:11px;">Beyond included revision rounds</div>
+            </div>
+            <div style="text-align:right;">
+              <input type="number" id="hours_revisions" placeholder="0" min="0" style="width:50px;padding:4px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;margin-right:6px;" onchange="calculateServices()" value="0">
+              <div style="color:var(--muted);font-size:10px;">@ <span style="color:var(--gold);" id="hourly_rate">$50</span>/hr</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1px solid var(--border);opacity:0.7;">
+            <input type="checkbox" id="svc_urgent" onchange="calculateServices()" style="width:18px;height:18px;cursor:pointer;">
+            <div style="flex:1;">
+              <div style="color:var(--white);font-weight:500;margin-bottom:2px;">Urgent Delivery Fee</div>
+              <div style="color:var(--muted2);font-size:11px;">Rush turnaround outside standard timeline</div>
+            </div>
+            <div style="text-align:right;">
+              <input type="number" id="price_urgent" placeholder="0" min="0" style="width:70px;padding:4px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;" onchange="calculateServices()" value="0">
+              <div style="color:var(--muted);font-size:10px;margin-top:2px">Custom amount</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1px solid var(--border);opacity:0.7;">
+            <input type="checkbox" id="svc_domain" onchange="calculateServices()" style="width:18px;height:18px;cursor:pointer;">
+            <div style="flex:1;">
+              <div style="color:var(--white);font-weight:500;margin-bottom:2px;">Domain / Hosting Renewal</div>
+              <div style="color:var(--muted2);font-size:11px;">Annual renewal — third-party cost passed through</div>
+            </div>
+            <div style="text-align:right;">
+              <input type="number" id="price_domain" placeholder="0" min="0" style="width:70px;padding:4px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;" onchange="calculateServices()" value="0">
+              <div style="color:var(--muted);font-size:10px;margin-top:2px">Cost</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1px solid var(--border);opacity:0.7;">
+            <input type="checkbox" id="svc_maintenance" onchange="calculateServices()" style="width:18px;height:18px;cursor:pointer;">
+            <div style="flex:1;">
+              <div style="color:var(--white);font-weight:500;margin-bottom:2px;">Monthly Maintenance Retainer</div>
+              <div style="color:var(--muted2);font-size:11px;">Ongoing updates, backups, security monitoring</div>
+            </div>
+            <div style="text-align:right;">
+              <input type="number" id="price_maintenance" placeholder="0" min="0" style="width:70px;padding:4px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;" onchange="calculateServices()" value="0">
+              <div style="color:var(--muted);font-size:10px;margin-top:2px">Monthly</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CUSTOM ADD-ON SECTION -->
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);">
+          <h4 style="color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">➕ Add Custom Service</h4>
+          <div style="display:grid;grid-template-columns:2fr 1fr 80px;gap:12px;margin-bottom:12px;">
+            <input type="text" id="custom_name" placeholder="Service name (e.g., 'Extra Pages')" style="padding:8px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;">
+            <input type="number" id="custom_price" placeholder="Price" min="0" style="padding:8px;background:var(--border);color:var(--white);border:1px solid var(--border);font-size:11px;text-align:right;">
+            <button onclick="addCustomService()" class="btn-gold" style="padding:8px;font-size:9px;">Add</button>
+          </div>
+          <div id="customAddonsDisplay" style="display:grid;gap:10px;"></div>
+        </div>
+      </div>
+
+      <!-- TOTALS -->
+      <div style="background:var(--card);border:1px solid var(--border);padding:24px;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Total Project Value</div>
+          <div style="color:var(--gold2);font-size:28px;font-weight:700;"><span id="currency_symbol_total">$</span><span id="totalPrice">680</span></div>
+        </div>
+        <div style="text-align:right;color:var(--muted);font-size:11px;">
+          <div style="margin-bottom:8px;">Auto-calculated from selected services</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;font-size:10px;">
+            <div><span style="color:var(--muted2);">Subtotal:</span> <span style="color:var(--white);"><span id="currency_symbol_subtotal">$</span><span id="subtotal">680</span></span></div>
+            <div><span style="color:var(--muted2);">Tax (0%):</span> <span style="color:var(--white);"><span id="currency_symbol_tax">$</span><span id="tax">0</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div style="display:flex;gap:12px;margin-top:40px;">
       <button class="btn-gold" style="flex:1;" onclick="showAllDocStatus()">✓ Complete Portal</button>
       <button class="btn-ghost" onclick="savePortalData()">💾 Save Data</button>
@@ -1144,6 +1277,12 @@ const portalFields = [
   'docVersion', 'revisionRounds', 'revisionRate', 'supportDays', 'terminationDays', 'delayThreshold'
 ];
 
+// Service fields for localStorage
+const serviceFields = [
+  'svc_website', 'svc_seo', 'svc_support', 'svc_revisions', 'svc_urgent', 'svc_domain', 'svc_maintenance',
+  'hours_revisions', 'price_urgent', 'price_domain', 'price_maintenance'
+];
+
 // Load portal data from localStorage on page load
 window.addEventListener('DOMContentLoaded', function() {
   loadPortalData();
@@ -1199,6 +1338,28 @@ function savePortalData() {
     const el = document.getElementById(field);
     if (el) data[field] = el.value;
   });
+  
+  // Save service fields
+  serviceFields.forEach(field => {
+    const el = document.getElementById(field);
+    if (el) {
+      if (el.type === 'checkbox') {
+        data[field] = el.checked;
+      } else {
+        data[field] = el.value;
+      }
+    }
+  });
+  
+  // Save custom addons
+  data.customAddons = customAddons;
+  data.currentCurrency = currentCurrency;
+  
+  // Save editable standard prices
+  data.price_website = document.getElementById('price_website_input')?.value || '500';
+  data.price_seo = document.getElementById('price_seo_input')?.value || '100';
+  data.price_support = document.getElementById('price_support_input')?.value || '80';
+  
   localStorage.setItem('portalData', JSON.stringify(data));
 }
 
@@ -1210,6 +1371,40 @@ function loadPortalData() {
       const el = document.getElementById(field);
       if (el && data[field]) el.value = data[field];
     });
+    
+    // Load service fields
+    serviceFields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el) {
+        if (el.type === 'checkbox') {
+          el.checked = data[field] || false;
+        } else {
+          el.value = data[field] || '';
+        }
+      }
+    });
+    
+    // Load custom addons
+    if (data.customAddons) {
+      customAddons = data.customAddons;
+      renderCustomAddons();
+    }
+    
+    // Load currency
+    if (data.currentCurrency) {
+      changeCurrency(data.currentCurrency);
+    }
+    
+    // Load custom prices
+    if (document.getElementById('price_website_input')) {
+      document.getElementById('price_website_input').value = data.price_website || '500';
+    }
+    if (document.getElementById('price_seo_input')) {
+      document.getElementById('price_seo_input').value = data.price_seo || '100';
+    }
+    if (document.getElementById('price_support_input')) {
+      document.getElementById('price_support_input').value = data.price_support || '80';
+    }
   } catch(e) {
     console.log('No saved data found');
   }
@@ -1222,6 +1417,26 @@ function exportPortalJSON() {
     const el = document.getElementById(field);
     if (el) data[field] = el.value;
   });
+  
+  // Include service data
+  serviceFields.forEach(field => {
+    const el = document.getElementById(field);
+    if (el) {
+      if (el.type === 'checkbox') {
+        data[field] = el.checked;
+      } else {
+        data[field] = el.value;
+      }
+    }
+  });
+  
+  // Include custom add-ons and currency
+  data.customAddons = customAddons;
+  data.currentCurrency = currentCurrency;
+  data.price_website = document.getElementById('price_website_input')?.value || '500';
+  data.price_seo = document.getElementById('price_seo_input')?.value || '100';
+  data.price_support = document.getElementById('price_support_input')?.value || '80';
+  
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
@@ -1300,6 +1515,23 @@ function getPortalData() {
     const el = document.getElementById(field);
     if (el) data[field] = el.value || '';
   });
+  
+  // Include service data
+  serviceFields.forEach(field => {
+    const el = document.getElementById(field);
+    if (el) {
+      if (el.type === 'checkbox') {
+        data[field] = el.checked;
+      } else {
+        data[field] = el.value || '';
+      }
+    }
+  });
+  
+  // Include custom add-ons and currency
+  data.customAddons = customAddons;
+  data.currentCurrency = currentCurrency;
+  
   return data;
 }
 
@@ -1339,16 +1571,55 @@ function downloadPDF(docId, docName) {
   const element = document.getElementById(docId);
   if (!element) return;
   
+  // Create a clone with white background styling
+  const clone = element.cloneNode(true);
+  const tempContainer = document.createElement('div');
+  // A4 width is 210mm, minus small margins = ~190mm at 96dpi = ~720px
+  tempContainer.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:210mm;background:white;padding:0;margin:0;';
+  tempContainer.appendChild(clone);
+  document.body.appendChild(tempContainer);
+  
+  // Apply white background styles to clone
+  clone.style.background = 'white';
+  clone.style.color = '#111';
+  clone.style.padding = '0';
+  clone.style.margin = '0';
+  clone.style.width = '100%';
+  
+  // Update colors in cloned element
+  clone.querySelectorAll('*').forEach(el => {
+    const style = window.getComputedStyle(el);
+    // If element has dark background, change to white/light
+    if (style.backgroundColor && (style.backgroundColor.includes('rgb(') || style.backgroundColor.includes('#'))) {
+      const bgColor = style.backgroundColor;
+      if (bgColor === 'rgb(8, 8, 8)') el.style.backgroundColor = 'white';
+      else if (bgColor === 'rgb(17, 17, 17)') el.style.backgroundColor = '#f8f8f8';
+      else if (bgColor === 'rgb(22, 22, 22)') el.style.backgroundColor = '#f8f8f8';
+      else if (bgColor === 'rgb(36, 36, 36)') el.style.backgroundColor = '#e8e8e8';
+    }
+    // If element has gold color, keep it but darken for print
+    if (style.color && style.color.includes('rgb(201, 168, 76)')) {
+      el.style.color = '#8a6820';
+    }
+    // Light text to dark text for backgrounds
+    if (style.color === 'rgb(240, 236, 227)') el.style.color = '#111';
+    if (style.color === 'rgb(119, 119, 119)') el.style.color = '#555';
+    if (style.color === 'rgb(85, 85, 85)') el.style.color = '#888';
+  });
+  
   const opt = {
-    margin: 0,
+    margin: [8, 8, 8, 8],
     filename: `${docName}-${new Date().toISOString().split('T')[0]}.pdf`,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    html2canvas: { scale: 2, backgroundColor: '#ffffff', logging: false, useCORS: true, allowTaint: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+    pagebreak: { mode: ['css', 'legacy'] }
   };
   
-  html2pdf().set(opt).from(element).save();
+  html2pdf().set(opt).from(clone).save().finally(() => {
+    // Clean up
+    document.body.removeChild(tempContainer);
+  });
 }
 
 function downloadAgreementPDF() {
@@ -1497,16 +1768,50 @@ function downloadDOCInSinhala(docId, docName) {
       return;
     }
     
+    // Create a clone with white background styling
+    const clone = element.cloneNode(true);
+    const tempContainer = document.createElement('div');
+    tempContainer.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:210mm;background:white;padding:0;margin:0;';
+    tempContainer.appendChild(clone);
+    document.body.appendChild(tempContainer);
+    
+    // Apply white background styles to clone
+    clone.style.background = 'white';
+    clone.style.color = '#111';
+    clone.style.padding = '0';
+    clone.style.margin = '0';
+    clone.style.width = '100%';
+    
+    // Update colors in cloned element
+    clone.querySelectorAll('*').forEach(el => {
+      const style = window.getComputedStyle(el);
+      if (style.backgroundColor && (style.backgroundColor.includes('rgb(') || style.backgroundColor.includes('#'))) {
+        const bgColor = style.backgroundColor;
+        if (bgColor === 'rgb(8, 8, 8)') el.style.backgroundColor = 'white';
+        else if (bgColor === 'rgb(17, 17, 17)') el.style.backgroundColor = '#f8f8f8';
+        else if (bgColor === 'rgb(22, 22, 22)') el.style.backgroundColor = '#f8f8f8';
+        else if (bgColor === 'rgb(36, 36, 36)') el.style.backgroundColor = '#e8e8e8';
+      }
+      if (style.color && style.color.includes('rgb(201, 168, 76)')) {
+        el.style.color = '#8a6820';
+      }
+      if (style.color === 'rgb(240, 236, 227)') el.style.color = '#111';
+      if (style.color === 'rgb(119, 119, 119)') el.style.color = '#555';
+      if (style.color === 'rgb(85, 85, 85)') el.style.color = '#888';
+    });
+    
     const opt = {
-      margin: 0,
+      margin: [8, 8, 8, 8],
       filename: `${docName}-Sinhala-${new Date().toISOString().split('T')[0]}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      html2canvas: { scale: 2, backgroundColor: '#ffffff', logging: false, useCORS: true, allowTaint: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+      pagebreak: { mode: ['css', 'legacy'] }
     };
     
-    html2pdf().set(opt).from(element).save();
+    html2pdf().set(opt).from(clone).save().finally(() => {
+      document.body.removeChild(tempContainer);
+    });
     
     // Switch back to English after a brief delay
     setTimeout(() => {
@@ -1529,6 +1834,200 @@ function downloadInvoiceSinhalaPDF() {
 function downloadWelcomeSinhalaPDF() {
   downloadDOCInSinhala('welcome', 'Zervian-Studio-Welcome');
 }
+
+// ── SERVICE PRICING & AUTO-CALCULATION ──
+const USD_TO_LKR = 330; // Conversion rate
+let currentCurrency = 'USD';
+let customAddons = [];
+
+function changeCurrency(currency) {
+  currentCurrency = currency;
+  
+  // Update button states
+  document.getElementById('currencyUSD').style.borderColor = currency === 'USD' ? 'var(--gold)' : 'var(--border)';
+  document.getElementById('currencyUSD').style.color = currency === 'USD' ? 'var(--gold)' : 'var(--muted)';
+  document.getElementById('currencyUSD').style.background = currency === 'USD' ? 'var(--gold3)' : 'transparent';
+  
+  document.getElementById('currencyLKR').style.borderColor = currency === 'LKR' ? 'var(--gold)' : 'var(--border)';
+  document.getElementById('currencyLKR').style.color = currency === 'LKR' ? 'var(--gold)' : 'var(--muted)';
+  document.getElementById('currencyLKR').style.background = currency === 'LKR' ? 'var(--gold3)' : 'transparent';
+  
+  // Update currency symbols
+  const symbol = currency === 'USD' ? '$' : 'රු';
+  document.querySelectorAll('#currency_symbol, #currency_symbol_total, #currency_symbol_subtotal, #currency_symbol_tax').forEach(el => {
+    el.textContent = symbol;
+  });
+  
+  calculateServices();
+  savePortalData();
+}
+
+function convertPrice(usdPrice) {
+  if (currentCurrency === 'LKR') {
+    return Math.round(usdPrice * USD_TO_LKR);
+  }
+  return usdPrice;
+}
+
+function calculateServices() {
+  let subtotal = 0;
+  
+  // Standard services with editable prices
+  const standardServices = {
+    svc_website: document.getElementById('price_website_input'),
+    svc_seo: document.getElementById('price_seo_input'),
+    svc_support: document.getElementById('price_support_input')
+  };
+  
+  // Calculate standard services
+  Object.entries(standardServices).forEach(([serviceId, inputEl]) => {
+    const checkbox = document.getElementById(serviceId);
+    if (checkbox && checkbox.checked && inputEl) {
+      const price = parseFloat(inputEl.value) || 0;
+      subtotal += price;
+      const priceSpan = document.getElementById(`price_${serviceId.replace('svc_', '')}`);
+      if (priceSpan) priceSpan.textContent = convertPrice(price);
+    }
+  });
+  
+  // Optional services
+  // Additional Revisions: hours * $50/hr
+  const revisionsCheckbox = document.getElementById('svc_revisions');
+  const hoursRevisions = document.getElementById('hours_revisions');
+  if (revisionsCheckbox && revisionsCheckbox.checked && hoursRevisions) {
+    const hours = parseFloat(hoursRevisions.value) || 0;
+    const revisionCost = hours * 50;
+    subtotal += revisionCost;
+  }
+  
+  // Urgent Delivery Fee
+  const urgentCheckbox = document.getElementById('svc_urgent');
+  const priceUrgent = document.getElementById('price_urgent');
+  if (urgentCheckbox && urgentCheckbox.checked && priceUrgent) {
+    const urgentCost = parseFloat(priceUrgent.value) || 0;
+    subtotal += urgentCost;
+  }
+  
+  // Domain/Hosting
+  const domainCheckbox = document.getElementById('svc_domain');
+  const priceDomain = document.getElementById('price_domain');
+  if (domainCheckbox && domainCheckbox.checked && priceDomain) {
+    const domainCost = parseFloat(priceDomain.value) || 0;
+    subtotal += domainCost;
+  }
+  
+  // Monthly Maintenance
+  const maintenanceCheckbox = document.getElementById('svc_maintenance');
+  const priceMaintenance = document.getElementById('price_maintenance');
+  if (maintenanceCheckbox && maintenanceCheckbox.checked && priceMaintenance) {
+    const maintenanceCost = parseFloat(priceMaintenance.value) || 0;
+    subtotal += maintenanceCost;
+  }
+  
+  // Custom add-ons
+  customAddons.forEach(addon => {
+    if (addon.checked) {
+      subtotal += addon.price;
+    }
+  });
+  
+  // Get tax rate (assuming 0% default)
+  const taxRate = 0;
+  const tax = subtotal * (taxRate / 100);
+  const total = subtotal + tax;
+  
+  // Convert to selected currency
+  const displaySubtotal = convertPrice(subtotal);
+  const displayTax = convertPrice(tax);
+  const displayTotal = convertPrice(total);
+  
+  // Update all totals
+  document.getElementById('subtotal').textContent = displaySubtotal;
+  document.getElementById('tax').textContent = displayTax;
+  document.getElementById('totalPrice').textContent = displayTotal;
+  
+  // Update the projectValue field
+  const symbol = currentCurrency === 'USD' ? '$' : 'රු ';
+  document.getElementById('projectValue').value = symbol + displayTotal;
+  
+  // Auto-save to localStorage
+  savePortalData();
+  updateDocs();
+}
+
+function addCustomService() {
+  const nameInput = document.getElementById('custom_name');
+  const priceInput = document.getElementById('custom_price');
+  
+  if (!nameInput.value || !priceInput.value) {
+    alert('Please enter both service name and price');
+    return;
+  }
+  
+  const addon = {
+    id: 'custom_' + Date.now(),
+    name: nameInput.value,
+    price: parseFloat(priceInput.value),
+    checked: true
+  };
+  
+  customAddons.push(addon);
+  
+  // Update display
+  nameInput.value = '';
+  priceInput.value = '';
+  
+  renderCustomAddons();
+  calculateServices();
+}
+
+function removeCustomService(id) {
+  customAddons = customAddons.filter(addon => addon.id !== id);
+  renderCustomAddons();
+  calculateServices();
+}
+
+function toggleCustomService(id) {
+  const addon = customAddons.find(a => a.id === id);
+  if (addon) {
+    addon.checked = !addon.checked;
+    calculateServices();
+  }
+}
+
+function renderCustomAddons() {
+  const container = document.getElementById('customAddonsDisplay');
+  container.innerHTML = '';
+  
+  customAddons.forEach(addon => {
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border:1px solid var(--gold);border-left:2px solid var(--gold);opacity:0.8;';
+    
+    div.innerHTML = `
+      <input type="checkbox" ${addon.checked ? 'checked' : ''} onchange="toggleCustomService('${addon.id}')" style="width:18px;height:18px;cursor:pointer;">
+      <div style="flex:1;">
+        <div style="color:var(--white);font-weight:500;margin-bottom:2px;">${addon.name}</div>
+        <div style="color:var(--muted2);font-size:11px;">Custom add-on</div>
+      </div>
+      <div style="text-align:right;margin-right:8px;">
+        <div style="color:var(--gold);font-weight:600;font-size:14px;margin-bottom:4px;">
+          <span style="font-size:11px;color:var(--muted);margin-right:4px;">${currentCurrency === 'USD' ? '$' : 'රු'}</span><span>${convertPrice(addon.price)}</span>
+        </div>
+      </div>
+      <button onclick="removeCustomService('${addon.id}')" class="tb-btn" style="padding:4px 8px;font-size:10px;background:rgba(255,0,0,0.1);border-color:rgba(255,0,0,0.3);color:#ff6b6b;">✕</button>
+    `;
+    
+    container.appendChild(div);
+  });
+}
+
+// Initialize price calculation on page load
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    calculateServices();
+  }, 100);
+});
+
 </script>
 </body>
 </html>
