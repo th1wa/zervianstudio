@@ -31,7 +31,7 @@ export const DocumentProvider = ({ children }) => {
     
     // The Agency (user defaults)
     agencyCompany: 'Zervian Studio PVT LTD',
-    agencyAddress: '162, Farmgrove Estate,\nVeyangoda',
+    agencyAddress: '162, Farmgrove Estate, Veyangoda',
     agencyEmail: 'zervianstudio@gmail.com',
     agencyPhone: '+94 70 1699 756',
     agencyRegNo: 'N/A',
@@ -161,7 +161,7 @@ export const DocumentProvider = ({ children }) => {
       estCompletion: 'DD / MM / YYYY',
       assignedContact: 'Your Name',
       agencyCompany: 'Zervian Studio PVT LTD',
-      agencyAddress: '162, Farmgrove Estate,\nVeyangoda',
+      agencyAddress: '162, Farmgrove Estate, Veyangoda',
       agencyEmail: 'zervianstudio@gmail.com',
       agencyPhone: '+94 70 1699 756',
       agencyRegNo: 'N/A',
