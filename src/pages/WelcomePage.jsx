@@ -102,7 +102,7 @@ const WelcomePage = () => {
                   <input
                     type="text"
                     value={formData.agencyName}
-                    onChange={(e) => handleInputChange(e, 'agencyName')}
+                    readOnly
                     className={styles.editableInput}
                   />
                 </div>
@@ -232,13 +232,13 @@ const WelcomePage = () => {
                     Email: <input
                       type="email"
                       value={formData.agencyEmail}
-                      onChange={(e) => handleInputChange(e, 'agencyEmail')}
+                      readOnly
                       className={styles.linkInput}
                     /><br />
                     Phone: <input
                       type="text"
                       value={formData.agencyPhone}
-                      onChange={(e) => handleInputChange(e, 'agencyPhone')}
+                      readOnly
                       className={styles.linkInput}
                     /><br />
                     Portal: <input

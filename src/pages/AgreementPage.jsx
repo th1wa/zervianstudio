@@ -95,7 +95,7 @@ const AgreementPage = () => {
                   <input
                     type="text"
                     value={formData.agencyName}
-                    onChange={(e) => handleInputChange(e, 'agencyName')}
+                    readOnly
                     className={styles.editableInput}
                     spellCheck="false"
                   />
@@ -196,7 +196,7 @@ const AgreementPage = () => {
                     <input
                       type="text"
                       value={formData.agencyCompany}
-                      onChange={(e) => handleInputChange(e, 'agencyCompany')}
+                      readOnly
                       className={styles.editableInput}
                     />
                   </div>
@@ -205,7 +205,7 @@ const AgreementPage = () => {
                     <input
                       type="text"
                       value={formData.agencyAddress}
-                      onChange={(e) => handleInputChange(e, 'agencyAddress')}
+                      readOnly
                       className={styles.editableInput}
                     />
                   </div>
@@ -214,7 +214,7 @@ const AgreementPage = () => {
                     <input
                       type="email"
                       value={formData.agencyEmail}
-                      onChange={(e) => handleInputChange(e, 'agencyEmail')}
+                      readOnly
                       className={styles.editableInput}
                     />
                   </div>
@@ -223,7 +223,7 @@ const AgreementPage = () => {
                     <input
                       type="tel"
                       value={formData.agencyPhone}
-                      onChange={(e) => handleInputChange(e, 'agencyPhone')}
+                      readOnly
                       className={styles.editableInput}
                     />
                   </div>
@@ -232,7 +232,7 @@ const AgreementPage = () => {
                     <input
                       type="text"
                       value={formData.agencyRegNo}
-                      onChange={(e) => handleInputChange(e, 'agencyRegNo')}
+                      readOnly
                       className={styles.editableInput}
                     />
                   </div>
