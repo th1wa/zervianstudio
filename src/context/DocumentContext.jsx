@@ -16,7 +16,7 @@ export const useDocumentContext = () => {
 export const DocumentProvider = ({ children }) => {
   const [formData, setFormData] = useState({
     // Agreement Section
-    agencyName: 'Your Agency Name',
+    agencyName: 'Zervian Studio PVT LTD',
     documentRef: 'AGR-001',
     dateIssued: 'DD / MM / YYYY',
     version: '1.0',
@@ -29,11 +29,11 @@ export const DocumentProvider = ({ children }) => {
     estCompletion: 'DD / MM / YYYY',
     assignedContact: 'Your Name',
     
-    // The Agency
-    agencyCompany: 'Your Business Name',
-    agencyAddress: 'Your Address',
-    agencyEmail: 'you@youragency.com',
-    agencyPhone: '+00 000 0000',
+    // The Agency (user defaults)
+    agencyCompany: 'Zervian Studio PVT LTD',
+    agencyAddress: '162, Farmgrove Estate, Veyangoda',
+    agencyEmail: 'zervianstudio@gmail.com',
+    agencyPhone: '+94 70 1699 756',
     agencyRegNo: 'N/A',
     
     // The Client
@@ -127,7 +127,7 @@ export const DocumentProvider = ({ children }) => {
   // Clear all data and reset to defaults
   const clearAllData = () => {
     const defaultData = {
-      agencyName: 'Your Agency Name',
+      agencyName: 'Zervian Studio PVT LTD',
       documentRef: 'AGR-001',
       dateIssued: 'DD / MM / YYYY',
       version: '1.0',
@@ -137,10 +137,10 @@ export const DocumentProvider = ({ children }) => {
       startDate: 'DD / MM / YYYY',
       estCompletion: 'DD / MM / YYYY',
       assignedContact: 'Your Name',
-      agencyCompany: 'Your Business Name',
-      agencyAddress: 'Your Address',
-      agencyEmail: 'you@youragency.com',
-      agencyPhone: '+00 000 0000',
+      agencyCompany: 'Zervian Studio PVT LTD',
+      agencyAddress: '162, Farmgrove Estate, Veyangoda',
+      agencyEmail: 'zervianstudio@gmail.com',
+      agencyPhone: '+94 70 1699 756',
       agencyRegNo: 'N/A',
       clientName: 'Client Full Name',
       clientBusiness: 'Client Business Name',
