@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDocumentContext } from '../context/DocumentContext';
 import styles from './WelcomePage.module.css';
@@ -11,8 +11,17 @@ const WelcomePage = () => {
     updateField(fieldName, e.target.value);
   };
 
-  const handlePrint = () => {
-    window.print();
+  const docRef = useRef(null);
+
+  const handlePrint = async () => {
+    try {
+      const { exportElementToPdf } = await import('../utils/pdfExport');
+      const name = `${formData.projectName || 'welcome'}.pdf`.replace(/\s+/g, '_');
+      await exportElementToPdf(docRef.current, name);
+    } catch (err) {
+      console.error('PDF export failed, falling back to print', err);
+      window.print();
+    }
   };
 
   const [checklist, setChecklist] = React.useState({
@@ -85,7 +94,7 @@ const WelcomePage = () => {
           </div>
 
           {/* Document Card */}
-          <div className={styles.docCard}>
+          <div className={styles.docCard} ref={docRef}>
             {/* Document Header */}
             <div className={styles.docHeader}>
               <div className={styles.dhl}>
