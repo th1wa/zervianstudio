@@ -90,13 +90,36 @@ export const DocumentProvider = ({ children }) => {
     legalCompliance: 'The Client is responsible for ensuring content is accurate, legally compliant, and that they hold rights to materials provided.',
   });
 
+  const migrateOldAgencyPlaceholders = (data) => {
+    const migrated = { ...data };
+
+    if (migrated.agencyName === 'Your Agency Name') {
+      migrated.agencyName = 'Zervian Studio PVT LTD';
+    }
+    if (migrated.agencyCompany === 'Your Business Name') {
+      migrated.agencyCompany = 'Zervian Studio PVT LTD';
+    }
+    if (migrated.agencyAddress === 'Your Address') {
+      migrated.agencyAddress = '162, Farmgrove Estate, Veyangoda';
+    }
+    if (migrated.agencyEmail === 'you@youragency.com') {
+      migrated.agencyEmail = 'zervianstudio@gmail.com';
+    }
+    if (migrated.agencyPhone === '+00 000 0000') {
+      migrated.agencyPhone = '+94 70 1699 756';
+    }
+
+    return migrated;
+  };
+
   // Load data from localStorage on mount
   useEffect(() => {
     const savedData = localStorage.getItem('clientAgreementData');
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        setFormData((prev) => ({ ...prev, ...parsedData }));
+        const migratedData = migrateOldAgencyPlaceholders(parsedData);
+        setFormData((prev) => ({ ...prev, ...migratedData }));
       } catch (error) {
         console.error('Failed to load saved data:', error);
       }
